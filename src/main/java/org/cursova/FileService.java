@@ -44,7 +44,7 @@ public class FileService {
             for(int i = 0; i < NUMBER_OF_THREADS; i++) {
                 threads[i].join();
             }
-            return fileTextMap;
+            return new ConcurrentHashMap<>(fileTextMap);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } finally {
