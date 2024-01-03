@@ -7,15 +7,21 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class InvertedIndex {
-    private static final int NUMBER_OF_THREADS = 10;
+public class InvertedIndexService {
+    private final int numberOfThreads;
     private static Map<String, Set<String>> index;
 
-    public InvertedIndex() {
+    public InvertedIndexService(int numberOfThreads) {
         index = new ConcurrentHashMap<>();
+        this.numberOfThreads = numberOfThreads;
     }
 
-    public void addDocument(String fileName, String content) {
+    public InvertedIndexService() {
+        index = new ConcurrentHashMap<>();
+        this.numberOfThreads = Runtime.getRuntime().availableProcessors();
+    }
+
+    public void addFile(String fileName, String content) {
         String[] words = content.toLowerCase().split("\\W+");
         Arrays.stream(words)
                 .forEach(w -> index
@@ -23,17 +29,17 @@ public class InvertedIndex {
                         .add(fileName));
     }
 
-    public void addDocuments(Map<String, String> fileTextMap, String[] fileNames) {
-        DocumentAdder[] documentAdder = new DocumentAdder[NUMBER_OF_THREADS];
-        Thread[] thread = new Thread[NUMBER_OF_THREADS];
-        for(int i = 1; i <= NUMBER_OF_THREADS; i++) {
+    public void addFiles(Map<String, String> fileTextMap, String[] fileNames) {
+        DocumentAdder[] documentAdder = new DocumentAdder[numberOfThreads];
+        Thread[] thread = new Thread[numberOfThreads];
+        for(int i = 1; i <= numberOfThreads; i++) {
+            int start = fileNames.length / numberOfThreads * (i - 1);
+            int end = i == numberOfThreads ? fileNames.length : fileNames.length / numberOfThreads * i;
             thread[i - 1] = new Thread(documentAdder[i - 1]
-                    = new DocumentAdder(fileTextMap, Arrays.copyOfRange(fileNames,
-                    fileNames.length / NUMBER_OF_THREADS * (i - 1),
-                    fileNames.length / NUMBER_OF_THREADS * i)));
+                    = new DocumentAdder(fileTextMap, Arrays.copyOfRange(fileNames, start, end)));
             thread[i - 1].start();
         }
-        for(int i = 0; i < NUMBER_OF_THREADS; i++) {
+        for(int i = 0; i < numberOfThreads; i++) {
             try {
                 thread[i].join();
             } catch (InterruptedException e) {

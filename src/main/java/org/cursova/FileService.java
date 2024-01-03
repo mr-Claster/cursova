@@ -8,11 +8,17 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class FileService {
-    private final static int NUMBER_OF_THREADS = 10;
+    private final int numberOfThreads;
     private static Map<String, String> fileTextMap;
+
+    public FileService(int numberOfThreads) {
+        fileTextMap = new ConcurrentHashMap<>();
+        this.numberOfThreads = numberOfThreads;
+    }
 
     public FileService() {
         fileTextMap = new ConcurrentHashMap<>();
+        this.numberOfThreads = Runtime.getRuntime().availableProcessors();
     }
 
     public String readFile(String fileName) {
@@ -30,18 +36,18 @@ public class FileService {
     }
 
     public Map<String, String> readFiles(String[] fileNames) {
-        FileReader[] fileReader = new FileReader[NUMBER_OF_THREADS];
-        Thread[] threads = new Thread[NUMBER_OF_THREADS];
+        FileReader[] fileReader = new FileReader[numberOfThreads];
+        Thread[] threads = new Thread[numberOfThreads];
 
-        for(int i = 1; i <= NUMBER_OF_THREADS; i++) {
+        for(int i = 1; i <= numberOfThreads; i++) {
+            int start = fileNames.length / numberOfThreads * (i - 1);
+            int end = i == numberOfThreads ? fileNames.length : fileNames.length / numberOfThreads * i;
             threads[i - 1] = new Thread(fileReader[i - 1]
-                    = new FileReader(Arrays.copyOfRange(fileNames,
-                            fileNames.length / NUMBER_OF_THREADS * (i - 1),
-                            fileNames.length / NUMBER_OF_THREADS * i)));
+                    = new FileReader(Arrays.copyOfRange(fileNames, start, end)));
             threads[i - 1].start();
         }
         try {
-            for(int i = 0; i < NUMBER_OF_THREADS; i++) {
+            for(int i = 0; i < numberOfThreads; i++) {
                 threads[i].join();
             }
             return new ConcurrentHashMap<>(fileTextMap);
@@ -52,7 +58,7 @@ public class FileService {
         }
     }
 
-    public String[] showFilesInDirectory(String directoryPath) {
+    public String[] getFilesAbsolutePathInDirectory(String directoryPath) {
         File directory = new File(directoryPath);
         File[] files = directory.listFiles();
         if(files == null) {
