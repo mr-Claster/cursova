@@ -4,12 +4,15 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class FileService {
     private final static int NUMBER_OF_THREADS = 10;
+    private static Map<String, String> fileTextMap;
+
     public FileService() {
+        fileTextMap = new ConcurrentHashMap<>();
     }
 
     public String readFile(String fileName) {
@@ -29,7 +32,6 @@ public class FileService {
     public Map<String, String> readFiles(String[] fileNames) {
         FileReader[] fileReader = new FileReader[NUMBER_OF_THREADS];
         Thread[] threads = new Thread[NUMBER_OF_THREADS];
-        Map<String, String> resultMap = new HashMap<>();
 
         for(int i = 1; i <= NUMBER_OF_THREADS; i++) {
             threads[i - 1] = new Thread(fileReader[i - 1]
@@ -38,15 +40,16 @@ public class FileService {
                             fileNames.length / NUMBER_OF_THREADS * i)));
             threads[i - 1].start();
         }
-        for(int i = 0; i < NUMBER_OF_THREADS; i++) {
-            try {
+        try {
+            for(int i = 0; i < NUMBER_OF_THREADS; i++) {
                 threads[i].join();
-                resultMap.putAll(fileReader[i].getResult());
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
             }
+            return fileTextMap;
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } finally {
+            fileTextMap.clear();
         }
-        return resultMap;
     }
 
     public String[] showFilesInDirectory(String directoryPath) {
@@ -62,11 +65,9 @@ public class FileService {
 
     private static class FileReader implements Runnable {
         private final String[] fileNames;
-        private final Map<String, String> hashMap;
 
         public FileReader(String[] fileNames) {
             this.fileNames = fileNames;
-            this.hashMap = new HashMap<>();
         }
 
         @Override
@@ -79,16 +80,12 @@ public class FileService {
                     while ((line = reader.readLine()) != null) {
                         stringBuilder.append(line);
                     }
-                    hashMap.put(fileName, stringBuilder.toString());
+                    fileTextMap.put(fileName, stringBuilder.toString());
                     stringBuilder.delete(0, stringBuilder.length());
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }
-
-        public Map<String, String> getResult() {
-            return hashMap;
         }
     }
 }

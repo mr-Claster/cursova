@@ -15,7 +15,17 @@ public class Main {
 
         System.out.println("Search results for the 'say':"
                 + invertedIndex.search("say"));
+        System.out.println();
+        System.out.println();
         System.out.println("Search results for the 'it':"
                 + invertedIndex.search("it"));
+        System.out.println();
+        System.out.println();
+        System.out.println("Search results for the 'was':"
+                + invertedIndex.search("was"));
+        System.out.println();
+        System.out.println();
+        System.out.println("Search results for the 'task':"
+                + invertedIndex.search("task"));
     }
 }
