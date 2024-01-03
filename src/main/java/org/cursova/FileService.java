@@ -5,10 +5,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FileService {
+    private final static int NUMBER_OF_THREADS = 10;
     public FileService() {
     }
 
@@ -17,7 +18,7 @@ public class FileService {
         try {
             BufferedReader reader = new BufferedReader(new java.io.FileReader(fileName));
             String line;
-            while ((line = reader.readLine()) != null) {
+            while((line = reader.readLine()) != null) {
                 stringBuilder.append(line);
             }
         } catch (IOException e) {
@@ -26,7 +27,30 @@ public class FileService {
         return stringBuilder.toString();
     }
 
-    public List<String> showFilesInDirectory(String directoryPath) {
+    public Map<String, String> readFiles(String[] fileNames) {
+        FileReader[] fileReader = new FileReader[NUMBER_OF_THREADS];
+        Thread[] threads = new Thread[NUMBER_OF_THREADS];
+        Map<String, String> resultMap = new HashMap<>();
+
+        for(int i = 1; i <= NUMBER_OF_THREADS; i++) {
+            threads[i - 1] = new Thread(fileReader[i - 1]
+                    = new FileReader(Arrays.copyOfRange(fileNames,
+                            fileNames.length / NUMBER_OF_THREADS * (i - 1),
+                            fileNames.length / NUMBER_OF_THREADS * i)));
+            threads[i - 1].start();
+        }
+        for(int i = 0; i < NUMBER_OF_THREADS; i++) {
+            try {
+                threads[i].join();
+                resultMap.putAll(fileReader[i].getResult());
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return resultMap;
+    }
+
+    public String[] showFilesInDirectory(String directoryPath) {
         File directory = new File(directoryPath);
         File[] files = directory.listFiles();
         if(files == null) {
@@ -34,6 +58,38 @@ public class FileService {
         }
         return Arrays.stream(files)
                 .map(File::getAbsolutePath)
-                .collect(Collectors.toList());
+                .toArray(String[]::new);
+    }
+
+    private static class FileReader implements Runnable {
+        private final String[] fileNames;
+        private final Map<String, String> hashMap;
+
+        public FileReader(String[] fileNames) {
+            this.fileNames = fileNames;
+            this.hashMap = new HashMap<>();
+        }
+
+        @Override
+        public void run() {
+            StringBuilder stringBuilder = new StringBuilder();
+            try {
+                for(String fileName : fileNames) {
+                    BufferedReader reader = new BufferedReader(new java.io.FileReader(fileName));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        stringBuilder.append(line);
+                    }
+                    hashMap.put(fileName, stringBuilder.toString());
+                    stringBuilder.delete(0, stringBuilder.length());
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        public Map<String, String> getResult() {
+            return hashMap;
+        }
     }
 }

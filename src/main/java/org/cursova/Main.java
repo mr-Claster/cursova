@@ -1,22 +1,25 @@
 package org.cursova;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         InvertedIndex invertedIndex = new InvertedIndex();
         FileService fileReader = new FileService();
-        List<String> filesInDirectory = fileReader.showFilesInDirectory("C:\\kpi\\cursova\\train\\neg\\");
+        String[] filesInDirectory = fileReader.showFilesInDirectory("C:\\kpi\\cursova\\train\\neg\\");
 
-        System.out.println(filesInDirectory.get(0));
-        System.out.println(filesInDirectory.get(1));
+        Map<String, String> fileTextMap = fileReader.readFiles(filesInDirectory);
 
-        String s = fileReader.readFile(filesInDirectory.get(0));
-        invertedIndex.addDocument(filesInDirectory.get(0), s);
 
-        s = fileReader.readFile(filesInDirectory.get(1));
-        invertedIndex.addDocument(filesInDirectory.get(1), s);
+        System.out.println(filesInDirectory[0]);
+        System.out.println(filesInDirectory[1]);
+
+        String s = fileReader.readFile(filesInDirectory[0]);
+        invertedIndex.addDocument(filesInDirectory[0], s);
+
+        s = fileReader.readFile(filesInDirectory[1]);
+        invertedIndex.addDocument(filesInDirectory[1], s);
 
         System.out.println("Search results for the 'say':"
                 + invertedIndex.search("say"));
