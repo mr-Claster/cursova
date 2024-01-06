@@ -1,4 +1,4 @@
-package org.cursova;
+package org.cursova.server.service;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -30,13 +30,12 @@ public class InvertedIndexService {
     }
 
     public void addFiles(Map<String, String> fileTextMap, String[] fileNames) {
-        DocumentAdder[] documentAdder = new DocumentAdder[numberOfThreads];
         Thread[] thread = new Thread[numberOfThreads];
         for(int i = 1; i <= numberOfThreads; i++) {
             int start = fileNames.length / numberOfThreads * (i - 1);
             int end = i == numberOfThreads ? fileNames.length : fileNames.length / numberOfThreads * i;
-            thread[i - 1] = new Thread(documentAdder[i - 1]
-                    = new DocumentAdder(fileTextMap, Arrays.copyOfRange(fileNames, start, end)));
+
+            thread[i - 1] = new Thread(new DocumentAdder(fileTextMap, Arrays.copyOfRange(fileNames, start, end)));
             thread[i - 1].start();
         }
         for(int i = 0; i < numberOfThreads; i++) {

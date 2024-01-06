@@ -1,4 +1,4 @@
-package org.cursova;
+package org.cursova.server.service;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -36,14 +36,13 @@ public class FileService {
     }
 
     public Map<String, String> readFiles(String[] fileNames) {
-        FileReader[] fileReader = new FileReader[numberOfThreads];
         Thread[] threads = new Thread[numberOfThreads];
 
         for(int i = 1; i <= numberOfThreads; i++) {
             int start = fileNames.length / numberOfThreads * (i - 1);
             int end = i == numberOfThreads ? fileNames.length : fileNames.length / numberOfThreads * i;
-            threads[i - 1] = new Thread(fileReader[i - 1]
-                    = new FileReader(Arrays.copyOfRange(fileNames, start, end)));
+
+            threads[i - 1] = new Thread(new FileReader(Arrays.copyOfRange(fileNames, start, end)));
             threads[i - 1].start();
         }
         try {

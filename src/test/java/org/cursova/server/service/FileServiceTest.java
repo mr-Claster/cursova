@@ -1,4 +1,4 @@
-package org.cursova;
+package org.cursova.server.service;
 
 import org.junit.jupiter.api.Test;
 
