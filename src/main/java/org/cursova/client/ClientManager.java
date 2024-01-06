@@ -11,6 +11,7 @@ public class ClientManager {
             ClientConnection client = new ClientConnection("localhost", 8080, word);
             executor.execute(client);
         }
+        executor.shutdown();
     }
 }
 

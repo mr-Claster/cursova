@@ -1,6 +1,8 @@
 package org.cursova.server.service;
 
 import java.util.Map;
+import org.cursova.server.service.impl.FileServiceImpl;
+import org.cursova.server.service.impl.InvertedIndexServiceImpl;
 import org.junit.jupiter.api.Test;
 
 class InvertedIndexServiceTest {
@@ -9,14 +11,14 @@ class InvertedIndexServiceTest {
 
 
      InvertedIndexServiceTest() {
-        FileService fileService = new FileService();
+        FileServiceImpl fileService = new FileServiceImpl();
         this.filesPath = fileService.getFilesAbsolutePathInDirectory("C:\\kpi\\cursova\\test\\neg");
         this.fileTextMap = fileService.readFiles(filesPath);
     }
 
     @Test
     void testAddFiles() {
-        InvertedIndexService invertedIndexService = new InvertedIndexService(1);
+        InvertedIndexServiceImpl invertedIndexService = new InvertedIndexServiceImpl(1);
         long startTime = System.currentTimeMillis();
         invertedIndexService.addFiles(fileTextMap, filesPath);
         long endTime = System.currentTimeMillis();
@@ -25,7 +27,7 @@ class InvertedIndexServiceTest {
 
     @Test
     void testAddFiles1() {
-        InvertedIndexService invertedIndexService = new InvertedIndexService(2);
+        InvertedIndexServiceImpl invertedIndexService = new InvertedIndexServiceImpl(2);
         long startTime = System.currentTimeMillis();
         invertedIndexService.addFiles(fileTextMap, filesPath);
         long endTime = System.currentTimeMillis();
@@ -34,7 +36,7 @@ class InvertedIndexServiceTest {
 
     @Test
     void testAddFiles2() {
-        InvertedIndexService invertedIndexService = new InvertedIndexService(5);
+        InvertedIndexServiceImpl invertedIndexService = new InvertedIndexServiceImpl(5);
         long startTime = System.currentTimeMillis();
         invertedIndexService.addFiles(fileTextMap, filesPath);
         long endTime = System.currentTimeMillis();
@@ -43,7 +45,7 @@ class InvertedIndexServiceTest {
 
     @Test
     void testAddFiles3() {
-        InvertedIndexService invertedIndexService = new InvertedIndexService(10);
+        InvertedIndexServiceImpl invertedIndexService = new InvertedIndexServiceImpl(10);
         long startTime = System.currentTimeMillis();
         invertedIndexService.addFiles(fileTextMap, filesPath);
         long endTime = System.currentTimeMillis();
@@ -52,7 +54,7 @@ class InvertedIndexServiceTest {
 
     @Test
     void testAddFiles4() {
-        InvertedIndexService invertedIndexService = new InvertedIndexService(20);
+        InvertedIndexServiceImpl invertedIndexService = new InvertedIndexServiceImpl(20);
         long startTime = System.currentTimeMillis();
         invertedIndexService.addFiles(fileTextMap, filesPath);
         long endTime = System.currentTimeMillis();
@@ -61,7 +63,7 @@ class InvertedIndexServiceTest {
 
     @Test
     void testAddFiles5() {
-        InvertedIndexService invertedIndexService = new InvertedIndexService(50);
+        InvertedIndexServiceImpl invertedIndexService = new InvertedIndexServiceImpl(50);
         long startTime = System.currentTimeMillis();
         invertedIndexService.addFiles(fileTextMap, filesPath);
         long endTime = System.currentTimeMillis();
@@ -70,7 +72,7 @@ class InvertedIndexServiceTest {
 
     @Test
     void testAddFiles6() {
-        InvertedIndexService invertedIndexService = new InvertedIndexService(100);
+        InvertedIndexServiceImpl invertedIndexService = new InvertedIndexServiceImpl(100);
         long startTime = System.currentTimeMillis();
         invertedIndexService.addFiles(fileTextMap, filesPath);
         long endTime = System.currentTimeMillis();
@@ -79,7 +81,7 @@ class InvertedIndexServiceTest {
 
     @Test
     void testAddFiles7() {
-        InvertedIndexService invertedIndexService = new InvertedIndexService(200);
+        InvertedIndexServiceImpl invertedIndexService = new InvertedIndexServiceImpl(200);
         long startTime = System.currentTimeMillis();
         invertedIndexService.addFiles(fileTextMap, filesPath);
         long endTime = System.currentTimeMillis();
@@ -88,7 +90,7 @@ class InvertedIndexServiceTest {
 
     @Test
     void testAddFiles8() {
-        InvertedIndexService invertedIndexService = new InvertedIndexService(500);
+        InvertedIndexServiceImpl invertedIndexService = new InvertedIndexServiceImpl(500);
         long startTime = System.currentTimeMillis();
         invertedIndexService.addFiles(fileTextMap, filesPath);
         long endTime = System.currentTimeMillis();
@@ -97,7 +99,7 @@ class InvertedIndexServiceTest {
 
     @Test
     void testAddFiles9() {
-        InvertedIndexService invertedIndexService = new InvertedIndexService(1000);
+        InvertedIndexServiceImpl invertedIndexService = new InvertedIndexServiceImpl(1000);
         long startTime = System.currentTimeMillis();
         invertedIndexService.addFiles(fileTextMap, filesPath);
         long endTime = System.currentTimeMillis();
@@ -106,7 +108,7 @@ class InvertedIndexServiceTest {
 
     @Test
     void testAddFiles10() {
-        InvertedIndexService invertedIndexService = new InvertedIndexService(2000);
+        InvertedIndexServiceImpl invertedIndexService = new InvertedIndexServiceImpl(2000);
         long startTime = System.currentTimeMillis();
         invertedIndexService.addFiles(fileTextMap, filesPath);
         long endTime = System.currentTimeMillis();
@@ -115,7 +117,7 @@ class InvertedIndexServiceTest {
 
     @Test
     void testAddFiles11() {
-        InvertedIndexService invertedIndexService = new InvertedIndexService();
+        InvertedIndexServiceImpl invertedIndexService = new InvertedIndexServiceImpl();
         long startTime = System.currentTimeMillis();
         invertedIndexService.addFiles(fileTextMap, filesPath);
         long endTime = System.currentTimeMillis();

@@ -12,7 +12,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="cursova" options="--add-exports java.base/sun.net.www.protocol.file=ALL-UNNAMED" />
+      <module name="cursova" options="" />
     </option>
   </component>
 </project>

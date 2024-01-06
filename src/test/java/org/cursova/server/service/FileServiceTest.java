@@ -1,12 +1,13 @@
 package org.cursova.server.service;
 
+import org.cursova.server.service.impl.FileServiceImpl;
 import org.junit.jupiter.api.Test;
 
 class FileServiceTest {
 
     @Test
     void testReadFiles() {
-        FileService fileService = new FileService(1);
+        FileServiceImpl fileService = new FileServiceImpl(1);
         String[] filesPath = fileService.getFilesAbsolutePathInDirectory("C:\\kpi\\cursova\\test\\neg");
         long startTime = System.currentTimeMillis();
         fileService.readFiles(filesPath);
@@ -16,7 +17,7 @@ class FileServiceTest {
 
     @Test
     void testReadFiles2() {
-        FileService fileService = new FileService(2);
+        FileServiceImpl fileService = new FileServiceImpl(2);
         String[] filesPath = fileService.getFilesAbsolutePathInDirectory("C:\\kpi\\cursova\\test\\neg");
         long startTime = System.currentTimeMillis();
         fileService.readFiles(filesPath);
@@ -26,7 +27,7 @@ class FileServiceTest {
 
     @Test
     void testReadFiles3() {
-        FileService fileService = new FileService(5);
+        FileServiceImpl fileService = new FileServiceImpl(5);
         String[] filesPath = fileService.getFilesAbsolutePathInDirectory("C:\\kpi\\cursova\\test\\neg");
         long startTime = System.currentTimeMillis();
         fileService.readFiles(filesPath);
@@ -36,7 +37,7 @@ class FileServiceTest {
 
     @Test
     void testReadFiles4() {
-        FileService fileService = new FileService(10);
+        FileServiceImpl fileService = new FileServiceImpl(10);
         String[] filesPath = fileService.getFilesAbsolutePathInDirectory("C:\\kpi\\cursova\\test\\neg");
         long startTime = System.currentTimeMillis();
         fileService.readFiles(filesPath);
@@ -46,7 +47,7 @@ class FileServiceTest {
 
     @Test
     void testReadFiles5() {
-        FileService fileService = new FileService(20);
+        FileServiceImpl fileService = new FileServiceImpl(20);
         String[] filesPath = fileService.getFilesAbsolutePathInDirectory("C:\\kpi\\cursova\\test\\neg");
         long startTime = System.currentTimeMillis();
         fileService.readFiles(filesPath);
@@ -56,7 +57,7 @@ class FileServiceTest {
 
     @Test
     void testReadFiles6() {
-        FileService fileService = new FileService(50);
+        FileServiceImpl fileService = new FileServiceImpl(50);
         String[] filesPath = fileService.getFilesAbsolutePathInDirectory("C:\\kpi\\cursova\\test\\neg");
         long startTime = System.currentTimeMillis();
         fileService.readFiles(filesPath);
@@ -66,7 +67,7 @@ class FileServiceTest {
 
     @Test
     void testReadFiles7() {
-        FileService fileService = new FileService(100);
+        FileServiceImpl fileService = new FileServiceImpl(100);
         String[] filesPath = fileService.getFilesAbsolutePathInDirectory("C:\\kpi\\cursova\\test\\neg");
         long startTime = System.currentTimeMillis();
         fileService.readFiles(filesPath);
@@ -76,7 +77,7 @@ class FileServiceTest {
 
     @Test
     void testReadFiles8() {
-        FileService fileService = new FileService(200);
+        FileServiceImpl fileService = new FileServiceImpl(200);
         String[] filesPath = fileService.getFilesAbsolutePathInDirectory("C:\\kpi\\cursova\\test\\neg");
         long startTime = System.currentTimeMillis();
         fileService.readFiles(filesPath);
@@ -86,7 +87,7 @@ class FileServiceTest {
 
     @Test
     void testReadFiles9() {
-        FileService fileService = new FileService(400);
+        FileServiceImpl fileService = new FileServiceImpl(400);
         String[] filesPath = fileService.getFilesAbsolutePathInDirectory("C:\\kpi\\cursova\\test\\neg");
         long startTime = System.currentTimeMillis();
         fileService.readFiles(filesPath);
@@ -96,7 +97,7 @@ class FileServiceTest {
 
     @Test
     void testReadFiles10() {
-        FileService fileService = new FileService(1000);
+        FileServiceImpl fileService = new FileServiceImpl(1000);
         String[] filesPath = fileService.getFilesAbsolutePathInDirectory("C:\\kpi\\cursova\\test\\neg");
         long startTime = System.currentTimeMillis();
         fileService.readFiles(filesPath);
@@ -106,7 +107,7 @@ class FileServiceTest {
 
     @Test
     void testReadFiles11() {
-        FileService fileService = new FileService(2000);
+        FileServiceImpl fileService = new FileServiceImpl(2000);
         String[] filesPath = fileService.getFilesAbsolutePathInDirectory("C:\\kpi\\cursova\\test\\neg");
         long startTime = System.currentTimeMillis();
         fileService.readFiles(filesPath);
@@ -116,7 +117,7 @@ class FileServiceTest {
 
     @Test
     void testReadFiles12() {
-        FileService fileService = new FileService();
+        FileServiceImpl fileService = new FileServiceImpl();
         String[] filesPath = fileService.getFilesAbsolutePathInDirectory("C:\\kpi\\cursova\\test\\neg");
         long startTime = System.currentTimeMillis();
         fileService.readFiles(filesPath);

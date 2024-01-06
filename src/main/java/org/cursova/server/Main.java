@@ -5,17 +5,23 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Map;
 import org.cursova.server.service.FileService;
-import org.cursova.server.service.InvertedIndexService;
+import org.cursova.server.service.impl.FileServiceImpl;
+import org.cursova.server.service.impl.InvertedIndexServiceImpl;
 
 public class Main {
+
+    private static final String PATH = "C:\\kpi\\cursova\\train\\unsup";
+    private static final int PORT = 8080;
+
     public static void main(String[] args) {
-        InvertedIndexService invertedIndex = new InvertedIndexService();
-        FileService fileReader = new FileService();
-        String[] filesInDirectory = fileReader.getFilesAbsolutePathInDirectory("C:\\kpi\\cursova\\train\\unsup");
+        InvertedIndexServiceImpl invertedIndex = new InvertedIndexServiceImpl();
+        FileService fileReader = new FileServiceImpl();
+
+        String[] filesInDirectory = fileReader.getFilesAbsolutePathInDirectory(PATH);
         Map<String, String> fileTextMap = fileReader.readFiles(filesInDirectory);
         invertedIndex.addFiles(fileTextMap, filesInDirectory);
         try {
-            ServerSocket serverSocket = new ServerSocket(8080);
+            ServerSocket serverSocket = new ServerSocket(PORT);
             while (true) {
                 Socket clientSocket = serverSocket.accept();
                 Thread clientThread = new ClientThread(clientSocket, invertedIndex);
