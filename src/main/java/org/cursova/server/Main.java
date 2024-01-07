@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Map;
 import org.cursova.server.service.FileService;
+import org.cursova.server.service.InvertedIndexService;
 import org.cursova.server.service.impl.FileServiceImpl;
 import org.cursova.server.service.impl.InvertedIndexServiceImpl;
 
@@ -16,7 +17,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Server started");
 
-        InvertedIndexServiceImpl invertedIndex = new InvertedIndexServiceImpl();
+        InvertedIndexService invertedIndex = new InvertedIndexServiceImpl();
         FileService fileReader = new FileServiceImpl();
 
         String[] filesInDirectory = fileReader.getFilesAbsolutePathInDirectory(PATH);
