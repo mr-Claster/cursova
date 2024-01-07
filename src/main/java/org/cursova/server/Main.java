@@ -10,10 +10,12 @@ import org.cursova.server.service.impl.InvertedIndexServiceImpl;
 
 public class Main {
 
-    private static final String PATH = "C:\\kpi\\cursova\\train\\unsup";
+    private static final String PATH = "train\\unsup";
     private static final int PORT = 8080;
 
     public static void main(String[] args) {
+        System.out.println("Server started");
+
         InvertedIndexServiceImpl invertedIndex = new InvertedIndexServiceImpl();
         FileService fileReader = new FileServiceImpl();
 

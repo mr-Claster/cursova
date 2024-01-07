@@ -13,7 +13,8 @@ public class Client {
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
              BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in))) {
 
-            System.out.println("Connected to server. Enter a message:");
+            System.out.println("Connected to server.");
+            System.out.println("Enter a message for searching files with this words:");
             String userInput = stdIn.readLine();
 
             out.println(userInput);
