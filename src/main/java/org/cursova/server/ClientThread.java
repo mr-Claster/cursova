@@ -9,14 +9,14 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import org.cursova.server.service.impl.InvertedIndexServiceImpl;
+import org.cursova.server.service.InvertedIndexService;
 
 class ClientThread extends Thread {
     private final Socket clientSocket;
-    private final InvertedIndexServiceImpl invertedIndexService;
+    private final InvertedIndexService invertedIndexService;
     private static final ExecutorService executorService = Executors.newFixedThreadPool(10);
 
-    ClientThread(Socket clientSocket, InvertedIndexServiceImpl invertedIndexService) {
+    ClientThread(Socket clientSocket, InvertedIndexService invertedIndexService) {
         this.clientSocket = clientSocket;
         this.invertedIndexService = invertedIndexService;
     }
