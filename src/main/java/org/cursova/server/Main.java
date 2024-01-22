@@ -12,7 +12,7 @@ import org.cursova.server.service.impl.InvertedIndexServiceImpl;
 public class Main {
 
     private static final String PATH = "train\\unsup";
-    private static final int SOCKET = 8080;
+    private static final int PORT = 8080;
 
     public static void main(String[] args) {
         System.out.println("Server started");
@@ -24,7 +24,7 @@ public class Main {
         Map<String, String> fileTextMap = fileReader.readFiles(filesInDirectory);
         invertedIndex.addFiles(fileTextMap, filesInDirectory);
         try {
-            ServerSocket serverSocket = new ServerSocket(SOCKET);
+            ServerSocket serverSocket = new ServerSocket(PORT);
             while (true) {
                 Socket clientSocket = serverSocket.accept();
                 Thread clientThread = new ClientThread(clientSocket, invertedIndex);
