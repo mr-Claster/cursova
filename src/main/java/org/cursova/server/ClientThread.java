@@ -30,7 +30,7 @@ class ClientThread extends Thread {
             String clientMessage = inputReader.readLine();
 
             List<String> files = executorService
-                    .submit(() -> invertedIndexService.search(clientMessage))
+                    .submit(() -> invertedIndexService.search(clientMessage.toLowerCase()))
                     .get();
             outputWriter.println(files.toString());
         } catch (IOException | InterruptedException | ExecutionException e) {

@@ -9,6 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.cursova.server.service.InvertedIndexService;
 
 public class InvertedIndexServiceImpl implements InvertedIndexService {
+    private static final String REGEX = "(?U)[^\\p{Alpha}']+";
 
     private final int numberOfThreads;
     private static Map<String, Set<String>> index;
@@ -25,7 +26,7 @@ public class InvertedIndexServiceImpl implements InvertedIndexService {
 
     @Override
     public void addFile(String fileName, String content) {
-        String[] words = content.toLowerCase().split("\\W+");
+        String[] words = content.toLowerCase().split(REGEX);
         Arrays.stream(words)
                 .forEach(w -> index
                         .computeIfAbsent(w, k -> new HashSet<>())
@@ -69,7 +70,7 @@ public class InvertedIndexServiceImpl implements InvertedIndexService {
         @Override
         public void run() {
             for(String fileName : fileNames) {
-                String[] words = fileTextMap.get(fileName).toLowerCase().split("\\W+");
+                String[] words = fileTextMap.get(fileName).toLowerCase().split(REGEX);
                 Arrays.stream(words)
                         .forEach(w -> index
                                 .computeIfAbsent(w, k -> new HashSet<>())
